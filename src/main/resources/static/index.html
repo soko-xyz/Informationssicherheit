@@ -4,126 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RSA Üben</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 2rem;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-        h1, h2 {
-            color: #4CAF50;
-        }
-        button {
-            margin: 0.5rem;
-            padding: 0.5rem 1rem;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        button:disabled {
-            background-color: #ccc;
-            color: #666;
-            cursor: not-allowed;
-        }
-        textarea {
-            width: calc(100% - 2rem);
-            height: 200px;
-            margin-top: 1rem;
-            font-family: monospace;
-            padding: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            resize: none;
-        }
-    </style>
-    <script type="module">
-        import { RsaService } from './rsaService.js';
-        import {ExtendedEuclideanService} from "./extendedEuclidean.js";
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const explanationBox = document.getElementById("explanation");
-            let p, q, n, phi, e, d;
-
-            function appendExplanation(text) {
-                explanationBox.value += text + "\n-------------------\n";
-                explanationBox.scrollTop = explanationBox.scrollHeight;
-            }
-
-            function updateButtonStates() {
-                document.getElementById("calculatePhi").disabled = !p || !q;
-                document.getElementById("selectE").disabled = !phi;
-                document.getElementById("calculateN").disabled = !p || !q;
-                document.getElementById("calculateD").disabled = !e || !phi;
-                document.getElementById("encrypt").disabled = !e || !n;
-                document.getElementById("decrypt").disabled = !d || !n;
-            }
-
-            document.getElementById("generatePrimes").addEventListener("click", () => {
-                p = q = n = phi = e = d = null;
-                explanationBox.value = "";
-
-                const result = RsaService.generateTwoDifferentPrimesWithExplanation();
-                p = BigInt(result.p);
-                q = BigInt(result.q);
-                appendExplanation(`Primzahlen generiert: p = ${p}, q = ${q}`);
-                updateButtonStates();
-            });
-
-            document.getElementById("calculatePhi").addEventListener("click", () => {
-                const result = RsaService.phiWithExplanation(p, q);
-                phi = BigInt(result.phi);
-                appendExplanation(result.explanation);
-                updateButtonStates();
-            });
-
-            document.getElementById("selectE").addEventListener("click", () => {
-                const result = RsaService.selectEWithExplanation(phi);
-                e = BigInt(result.e);
-                appendExplanation(`${result.explanation}\n\ne = ${e}`);
-                updateButtonStates();
-            });
-
-            document.getElementById("calculateN").addEventListener("click", () => {
-                n = p * q;
-                appendExplanation(`n = p * q = ${p} * ${q} = ${n}`);
-                updateButtonStates();
-            });
-
-            document.getElementById("calculateD").addEventListener("click", () => {
-                const result = ExtendedEuclideanService.calculateModularInverseWithSteps(e, phi);
-                d = result.modularInverse;
-                appendExplanation(result.explanation);
-                updateButtonStates();
-            });
-
-            document.getElementById("encrypt").addEventListener("click", () => {
-                const message = BigInt(prompt("Geben Sie eine Nachricht als Zahl ein:"));
-                const result = RsaService.encryptWithExplanation(message, e, n);
-                appendExplanation(result.explanation);
-                updateButtonStates();
-            });
-
-            document.getElementById("decrypt").addEventListener("click", () => {
-                const ciphertext = BigInt(prompt("Geben Sie die verschlüsselte Nachricht als Zahl ein:"));
-                const result = RsaService.decryptWithExplanation(ciphertext, d, n);
-                appendExplanation(result.explanation);
-                updateButtonStates();
-            });
-        });
-    </script>
+    <script src="js/rsa.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <h1>RSA Schritt-für-Schritt</h1>
 <button id="generatePrimes">Primzahlen Generieren</button>
-<button disabled id="calculatePhi">Phi Berechnen</button>
 <button disabled id="calculateN">n Berechnen</button>
+<button disabled id="calculatePhi">Phi Berechnen</button>
 <button disabled id="selectE">e Wählen</button>
 <button disabled id="calculateD">d Berechnen</button>
 <button disabled id="encrypt">Nachricht Verschlüsseln</button>
