@@ -5,14 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RSA Üben</title>
     <script src="js/rsa.js"></script>
+    <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <header>
     <nav>
         <ul>
-            <li><a href="rsa">RSA</a></li>
-            <li><a href="aes-key">AES Key Expansion</a></li>
+            <li><a class="active" href="rsa">RSA</a></li>
+            <li>
+                <a href="javascript:void(0)">AES</a>
+                <ul>
+                    <li><a href="aes-key">Key Expansion</a></li>
+                    <li><a href="javascript:alert('coming soon')">Encryption</a></li>
+                </ul>
+            </li>
         </ul>
     </nav>
 </header>
