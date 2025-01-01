@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSA Üben</title>
+    <script src="js/rsa.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="/rsa.html">RSA</a></li>
+            <li><a href="/aes-key.html">AES Key Expansion</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <h1>RSA Schritt-für-Schritt</h1>
+    <button id="generatePrimes">Primzahlen Generieren</button>
+    <button disabled id="calculateN">n Berechnen</button>
+    <button disabled id="calculatePhi">Phi Berechnen</button>
+    <button disabled id="selectE">e Wählen</button>
+    <button disabled id="calculateD">d Berechnen</button>
+    <button disabled id="encrypt">Nachricht Verschlüsseln</button>
+    <button disabled id="decrypt">Nachricht Entschlüsseln</button>
+    <h2>Berechnung</h2>
+    <textarea id="explanation" readonly></textarea>
+</main>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AES Key Üben</title>
+    <script src="js/aes-key.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="/rsa.html">RSA</a></li>
+            <li><a href="/aes-key.html">AES Key Expansion</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <h1>AES Key Expansion</h1>
+    <button id="generateKey">0. Rundenschlüssel Generieren</button>
+    <button disabled id="splitKey">Schlüssel in w0-w3 Aufteilen</button>
+    <button disabled id="applyRotWord">RotWord(w3) Anwenden</button>
+    <button disabled id="applySubBytes">SubBytes mit SBox Anwenden</button>
+    <button disabled id="applyRcon">Rcon Anwenden</button>
+    <button disabled id="calculateW4-5">w4 bis w5 Berechnen</button>
+    <button disabled id="nextKey">1. Rundenschlüssel Angeben</button>
+    <h2>Schlüsselberechnung</h2>
+    <textarea id="aesExplanation" readonly></textarea>
+</main>
+</body>
+</html>
