@@ -34,7 +34,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("applyRotWord").disabled = !words[3]
         document.getElementById("applySubBytes").disabled = rotWordResult.length !== 4;
         document.getElementById("applyRcon").disabled = !subBytesResult.length;
-        document.getElementById("calculateW4-5").disabled = !addedRCONResult.length;
+        document.getElementById("calculateW4").disabled = !addedRCONResult.length;
+        document.getElementById("calculateW5").disabled = !words[4];
+        document.getElementById("calculateW6").disabled = !words[5];
+        document.getElementById("calculateW7").disabled = !words[6];
         document.getElementById("nextKey").disabled = !words[7];
     }
 
@@ -76,8 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function printXORWordsHandWrittenStyle(word1, word2, explanation) {
         const xorResult = word1.map((byte, index) => byte ^ word2[index]);
 
-        explanation.push(' ' + word1.map(b => b.toString(2).padStart(8, '0')).join(' '));
-        explanation.push('⊕' + word2.map(b => b.toString(2).padStart(8, '0')).join(' '));
+        explanation.push(' ' + word2.map(b => b.toString(2).padStart(8, '0')).join(' '));
+        explanation.push('⊕' + word1.map(b => b.toString(2).padStart(8, '0')).join(' '));
         explanation.push("=".repeat(36));
         explanation.push(' ' + xorResult.map(b => b.toString(2).padStart(8, '0')).join(' '));
         explanation.push(' ' + xorResult.map(b => b.toString(16).padStart(2, '0')).join('         '));
@@ -113,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("applySubBytes").addEventListener("click", () => {
         subBytesResult = subBytes(rotWordResult);
 
-        appendExplanation(`SubBytes(RotWord(W3))=(${subBytesResult.map(b => b.toString(16).padStart(2, '0')).join(' ')})^T`);
+        appendExplanation(`SubBytes(RotWord(w3))=(${subBytesResult.map(b => b.toString(16).padStart(2, '0')).join(' ')})^T`);
         updateButtonStates();
 
     });
@@ -121,20 +124,41 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("applyRcon").addEventListener("click", () => {
         addedRCONResult = addRCON(subBytesResult);
 
-        appendExplanation(`RCON(SubBytes(RotWord(W3)))=(${addedRCONResult.map(b => b.toString(16).padStart(2, '0')).join(' ')})^T`);
+        appendExplanation(`g(x) = RCON[1] + SubBytes(RotWord(w3))=(${addedRCONResult.map(b => b.toString(16).padStart(2, '0')).join(' ')})^T`);
         updateButtonStates();
     });
 
-    document.getElementById("calculateW4-5").addEventListener("click", () => {
-        let explanation = []
+    document.getElementById("calculateW4").addEventListener("click", () => {
+        let explanation = ["w4 = w0⊕g(x)\n"];
         words[4] = printXORWordsHandWrittenStyle(words[0], addedRCONResult, explanation)
-        explanation.push(`\nW4=(${words[4].map(b => b.toString(16).padStart(2, '0')).join(' ')})^T\n`);
+        explanation.push(`\nw4=(${words[4].map(b => b.toString(16).padStart(2, '0')).join(' ')})^T\n`);
+
+        appendExplanation(explanation.join('\n'));
+        updateButtonStates();
+    });
+
+    document.getElementById("calculateW5").addEventListener("click", () => {
+        let explanation = ["w5 = w1⊕w4\n"];
         words[5] = printXORWordsHandWrittenStyle(words[4], words[1], explanation)
-        explanation.push(`\nW5=(${words[5].map(b => b.toString(16).padStart(2, '0')).join(' ')})^T\n`);
+        explanation.push(`\nw5=(${words[5].map(b => b.toString(16).padStart(2, '0')).join(' ')})^T\n`);
+
+        appendExplanation(explanation.join('\n'));
+        updateButtonStates();
+    });
+
+    document.getElementById("calculateW6").addEventListener("click", () => {
+        let explanation = ["w6 = w2⊕w5\n"]
         words[6] = printXORWordsHandWrittenStyle(words[5], words[2], explanation)
-        explanation.push(`\nW6=(${words[6].map(b => b.toString(16).padStart(2, '0')).join(' ')})^T\n`);
+        explanation.push(`\nw6=(${words[6].map(b => b.toString(16).padStart(2, '0')).join(' ')})^T\n`);
+
+        appendExplanation(explanation.join('\n'));
+        updateButtonStates();
+    });
+
+    document.getElementById("calculateW7").addEventListener("click", () => {
+        let explanation = ["w7 = w3⊕w6\n"]
         words[7] = printXORWordsHandWrittenStyle(words[6], words[3], explanation)
-        explanation.push(`\nW7=(${words[7].map(b => b.toString(16).padStart(2, '0')).join(' ')})^T\n`);
+        explanation.push(`\nw7=(${words[7].map(b => b.toString(16).padStart(2, '0')).join(' ')})^T\n`);
 
         appendExplanation(explanation.join('\n'));
         updateButtonStates();
