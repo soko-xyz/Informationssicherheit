@@ -51,7 +51,6 @@ function maskMatrix(matrix) {
     for (let i = 0; i < n; i++) {
         masked[i] = [];
         for (let j = 0; j < n; j++) {
-            // Calculate the column index for the selected diagonal
             const targetCol = (i + selectedByte.col) % n;
             if (j === targetCol) {
                 masked[i][j] = matrix[i][j];
@@ -65,7 +64,6 @@ function maskMatrix(matrix) {
 }
 
 function subBytes(matrix) {
-    // take state matrix and apply SBox to each byte
     return matrix.map(row => row.map(byte => {
         if (byte === "..") {
             return "..";
@@ -86,7 +84,7 @@ function displayFalkSchema(stateMatrix, mixColumnsMatrix, explanation) {
         "            " + stateMatrix.map(row => row.map(val => val.toString(16).padStart(2, "0")).join(" ")).join("\n            ")
     );
 
-    const a = mixColumnsMatrix.map((row, i) => row.map(val => val.toString(16).padStart(2, "0")).join(" "))
+    const a = mixColumnsMatrix.map((row) => row.map(val => val.toString(16).padStart(2, "0")).join(" "))
 
     a[selectedByte.row] += "   ".repeat(selectedByte.col) + " x "
 
