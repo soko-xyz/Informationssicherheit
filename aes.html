@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AES Key Üben</title>
+    <script src="js/aes.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="rsa">RSA</a></li>
+            <li>
+                <a class="active" href="javascript:void(0)">AES</a>
+                <ul>
+                    <li><a href="aes-key">Key Expansion</a></li>
+                    <li><a class="active" href="aes">Encryption</a></li>
+                </ul>
+            </li>
+            <li><a href="javascript:alert('coming soon')">Diffie-Hellman</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <h1>AES Schritt-für-Schritt Berechnung</h1>
+    <button id="generateMatrix">Klartext XOR Schlüssel Generieren</button>
+    <button id="relevantBytes" disabled>Relevanten Bytes bestimmen</button>
+    <button id="subBytes" disabled>SubBytes Anwenden</button>
+    <button id="shiftRows" disabled>ShiftRows Anwenden</button>
+    <button id="mixColumns" disabled>MixColumns Anwenden</button>
+    <h2>Berechnungsschritte</h2>
+    <textarea id="calculationSteps" readonly></textarea>
+</main>
+</body>
+</html>
