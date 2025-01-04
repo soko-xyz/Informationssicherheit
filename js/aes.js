@@ -25,16 +25,10 @@ const MixColumnsMatrix = [
 ];
 
 let matrix = [];
+let selectedByte = {row: 0, col: 0};
 let maskedMatrix = [];
 let subedBytes = [];
 let shiftedMatrix = [];
-let selectedByte = {row: 0, col: 0};
-
-function appendToExplanation(text) {
-    const explanationBox = document.getElementById("calculationSteps");
-    explanationBox.value += text + "\n-------------------\n";
-    explanationBox.scrollTop = explanationBox.scrollHeight;
-}
 
 function generateRandomMatrix() {
     return Array.from({length: 4}, () => Array.from({length: 4}, () => Math.floor(Math.random() * 256)));
@@ -139,34 +133,50 @@ function mixColumns(stateMatrix, explanation) {
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    const explanationBox = document.getElementById("calculationSteps");
+    function appendToExplanation(text) {
+        explanationBox.value += text + "\n-------------------\n";
+        explanationBox.scrollTop = explanationBox.scrollHeight;
+    }
+
+    function updateButtonStates() {
+        document.getElementById("relevantBytes").disabled = matrix.length === 0;
+        document.getElementById("subBytes").disabled = maskedMatrix.length === 0;
+        document.getElementById("shiftRows").disabled = subedBytes.length === 0;
+        document.getElementById("mixColumns").disabled = shiftedMatrix.length === 0;
+    }
+
     document.getElementById("generateMatrix").addEventListener("click", () => {
         const plaintext = generateRandomMatrix();
         const key = generateRandomMatrix();
         matrix = xorMatrices(plaintext, key);
+        explanationBox.value = "";
+        maskedMatrix = [];
+        subedBytes = [];
+        shiftedMatrix = [];
 
         selectedByte = {row: Math.floor(Math.random() * 4), col: Math.floor(Math.random() * 4)};
 
-        appendToExplanation(`Nach XOR (Klartext ⊕ Schlüssel):\n${matrix.map(row => row.map(val => val.toString(16).padStart(2, "0")).join(" ")).join("\n")}`);
-        appendToExplanation(`Ausgewähltes Byte: Zeile ${selectedByte.row + 1}, Spalte ${selectedByte.col + 1}`);
-        document.getElementById("relevantBytes").disabled = false;
+        appendToExplanation(`Nach XOR (Klartext ⊕ Schlüssel):\n${matrix.map(row => row.map(val => val.toString(16).padStart(2, "0")).join(" ")).join("\n")}\n\nZu berechnendes Byte: Zeile ${selectedByte.row + 1}, Spalte ${selectedByte.col + 1}`);
+        updateButtonStates();
     });
 
     document.getElementById("relevantBytes").addEventListener("click", () => {
         maskedMatrix = maskMatrix(matrix);
         appendToExplanation(`Relevante Bytes (Matrix):\n${maskedMatrix.map(row => row.join(" ")).join("\n")}`);
-        document.getElementById("subBytes").disabled = false;
+        updateButtonStates();
     });
 
     document.getElementById("subBytes").addEventListener("click", () => {
         subedBytes = subBytes(maskedMatrix);
         appendToExplanation(`Nach SubBytes (nur relevante Bytes):\n${subedBytes.map(row => row.map(val => val.toString()).join(" ")).join("\n")}`);
-        document.getElementById("shiftRows").disabled = false;
+        updateButtonStates();
     });
 
     document.getElementById("shiftRows").addEventListener("click", () => {
         shiftedMatrix = shiftRows(subedBytes);
         appendToExplanation(`Nach ShiftRows (nur relevante Bytes):\n${shiftedMatrix.map(row => row.map(val => val.toString()).join(" ")).join("\n")}`);
-        document.getElementById("mixColumns").disabled = false;
+        updateButtonStates();
     });
 
     document.getElementById("mixColumns").addEventListener("click", () => {
