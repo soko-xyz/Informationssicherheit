@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diffie-Hellman Schritt-für-Schritt</title>
+    <script src="js/diffie-hellman.js" defer></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="rsa">RSA</a></li>
+            <li>
+                <a href="javascript:void(0)">AES</a>
+                <ul>
+                    <li><a href="aes-key">Key Expansion</a></li>
+                    <li><a href="aes">Encryption</a></li>
+                </ul>
+            </li>
+            <li><a class="active" href="diffie-hellman">Diffie-Hellman</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <h1>Diffie-Hellman Schritt-für-Schritt</h1>
+    <button id="generateP">1. Kleine Primzahl generieren</button>
+    <button id="calculateSubgroups" disabled>2. Untergruppen berechnen</button>
+    <button id="selectGenerator" disabled>3. Generator überprüfen</button>
+    <button id="exchangeKeys" disabled>4. Schlüssel berechnen</button>
+    <h2>Berechnung</h2>
+    <textarea id="explanation" readonly></textarea>
+</main>
+</body>
+</html>
