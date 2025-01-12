@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function addRCON(word) {
-        return word.map((byte, index) => byte ^ RCON1[index]);
+        return word.map((byte, index) => byte + RCON1[index]);
     }
 
     function printXORWordsHandWrittenStyle(word1, word2, explanation) {
