@@ -163,19 +163,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("relevantBytes").addEventListener("click", () => {
         maskedMatrix = maskMatrix(matrix);
-        appendToExplanation(`Relevante Bytes (Matrix):\n${maskedMatrix.map(row => row.join(" ")).join("\n")}`);
+        appendToExplanation(`Relevante Bytes (Matrix):\n${maskedMatrix.map(row => row.map(val => val.toString(16).padStart(2, "0")).join(" ")).join("\n")}`);
         updateButtonStates();
     });
 
     document.getElementById("subBytes").addEventListener("click", () => {
         subedBytes = subBytes(maskedMatrix);
-        appendToExplanation(`Nach SubBytes (nur relevante Bytes):\n${subedBytes.map(row => row.map(val => val.toString()).join(" ")).join("\n")}`);
+        appendToExplanation(`Nach SubBytes (nur relevante Bytes):\n${subedBytes.map(row => row.map(val => val.toString(16).padStart(2, "0")).join(" ")).join("\n")}`);
         updateButtonStates();
     });
 
     document.getElementById("shiftRows").addEventListener("click", () => {
         shiftedMatrix = shiftRows(subedBytes);
-        appendToExplanation(`Nach ShiftRows (nur relevante Bytes):\n${shiftedMatrix.map(row => row.map(val => val.toString()).join(" ")).join("\n")}`);
+        appendToExplanation(`Nach ShiftRows (nur relevante Bytes):\n${shiftedMatrix.map(row => row.map(val => val.toString(16).padStart(2, "0")).join(" ")).join("\n")}`);
         updateButtonStates();
     });
 
