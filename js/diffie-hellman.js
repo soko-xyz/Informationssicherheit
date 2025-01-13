@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const explanationBox = document.getElementById("explanation");
-    let p, subgroups, generator, privateKeyAlice, privateKeyBob, publicKeyAlice, publicKeyBob, sharedKeyAlice, sharedKeyBob;
+    let p, subgroups, generator, privateKeyAlice, privateKeyBob, publicKeyAlice, publicKeyBob, sharedKeyAlice,
+        sharedKeyBob;
 
     function appendExplanation(text) {
         explanationBox.value += text + "\n-------------------\n";
@@ -29,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const subgroupDetails = subgroups.map(subgroup => {
             let details = `  Untergruppe erzeugt durch g = ${subgroup.generator}:\n  { ${subgroup.elements.join(", ")} }\n  Berechnung:`;
             subgroup.steps.forEach(step => {
-                details += `\n    ${step.base}^${step.exponent} mod ${p} = ${step.result}`;
+                details += `\n    ${step.base}^${step.exponent} mod ${p} = ${step.subResult} mod ${p} = ${step.result}`;
             });
             return details;
         }).join("\n\n");
@@ -110,20 +111,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function calculateSubgroups(p) {
-        const group = Array.from({ length: p - 1 }, (_, i) => i + 1);
+        const group = Array.from({length: p - 1}, (_, i) => i + 1);
         const subgroups = [];
 
         for (let g of group) {
             const elements = new Set();
             let value = 1;
+            let subResult = 0;
             const steps = [];
             for (let i = 1; i <= p - 1; i++) {
-                value = (value * g) % p;
+                subResult = Math.pow(g, i);
+                value = subResult % p;
                 elements.add(value);
-                steps.push({ base: g, exponent: i, result: value });
+                steps.push({base: g, exponent: i, subResult: subResult, result: value});
                 if (value === 1) break; // Abbrechen, wenn wir die 1 erreicht haben
             }
-            subgroups.push({ generator: g, elements: Array.from(elements), steps });
+            subgroups.push({generator: g, elements: Array.from(elements), steps});
         }
 
         return subgroups;
