@@ -73,8 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const a = modExp(generator, x, p); // a = g^x mod p
         const b = modExp(generator, y, p); // b = g^y mod p
 
-        const k_1 = modExp(a, x, p); // k_1 = B^a mod p
-        const k_2 = modExp(b, y, p); // k_2 = A^b mod p
+        const k_1 = modExp(b, x, p); // k_1 = B^a mod p
+        const k_2 = modExp(a, y, p); // k_2 = A^b mod p
 
         const explanation = `
 4. Schlüsselaustausch zwischen Alice und Bob:
