@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function addRCON(word) {
-        return word.map((byte, index) => byte + RCON1[index]);
+        return word.map((byte, index) => byte ^ RCON1[index])
     }
 
     function printXORWordsHandWrittenStyle(word1, word2, explanation) {
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("applyRcon").addEventListener("click", () => {
         addedRCONResult = addRCON(subBytesResult);
 
-        appendExplanation(`g(x) = RCON[1] + SubBytes(RotWord(w3))=(${addedRCONResult.map(b => b.toString(16).padStart(2, '0')).join(' ')})^T`);
+        appendExplanation(`g(x) = RCON[1] ⊕ SubBytes(RotWord(w3))=(${addedRCONResult.map(b => b.toString(16).padStart(2, '0')).join(' ')})^T`);
         updateButtonStates();
     });
 
